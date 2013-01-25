@@ -7,6 +7,7 @@ kivy.require('1.5.1')
 
 from random import random
 from kivy.app import App
+from kivy.interactive import InteractiveLauncher
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.graphics import Color, Ellipse, Line
@@ -33,7 +34,6 @@ class MyPaintApp(App):
         parent.add_widget(painter)
         parent.add_widget(clear_button)
 
-
         def clear_canvas(obj):
             painter.canvas.clear()
 
@@ -43,3 +43,5 @@ class MyPaintApp(App):
 
 if __name__ == '__main__':
     MyPaintApp().run()
+    #i = InteractiveLauncher(MyPaintApp())
+    #i.run()
