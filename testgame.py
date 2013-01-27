@@ -63,13 +63,11 @@ class MainCharacter(pygame.sprite.Sprite):
         player in the right direction.
         """
         pixels = 2
-        print 'keys_pressed =', keys_pressed
-        print type(keys_pressed)
 
-        for key in keys_pressed:
-            print 'got key', key
-            self.pos[0] += MOVEMENTS[key][0] * pixel
-            self.pos[1] += MOVEMENTS[key][1] * pixel
+        for key, vector in MOVEMENTS.iteritems():
+            x, y = vector
+            self.pos[0] += x * pixels
+            self.pos[1] += y * pixels
         self.rect.move(self.pos)
         self.update()
 
@@ -78,7 +76,7 @@ def main():
     screen = pygame.display.set_mode((640, 480))
     background = set_background(screen)
     player = MainCharacter()
-    allsprites = pygame.sprite.RenderPlain((character))
+    allsprites = pygame.sprite.RenderPlain((player))
 
     keys_pressed = pygame.key.get_pressed()
 
@@ -87,12 +85,7 @@ def main():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit(0)
-            #if event.type == KEYDOWN:
-            #    print 'Adding event', event
-            #    KEYSPRESSED.add_event(event)
-            #if event.type == KEYUP:
-            #    print 'Removing event', event
-            #    KEYSPRESSED.remove_event(event)
+
             if event.type == KEYDOWN:
                 player.move_char(pygame.key.get_pressed(),
                                  background.get_rect())
@@ -100,7 +93,7 @@ def main():
                 print event
 
             #if len(KEYSPRESSED):
-            #    character.move_char(KEYSPRESSED, background.get_rect())
+            #    player.move_char(KEYSPRESSED, background.get_rect())
             allsprites.update()
             screen.blit(background, (0, 0))
             allsprites.draw(screen)
