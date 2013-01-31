@@ -65,9 +65,11 @@ class MainCharacter(pygame.sprite.Sprite):
         pixels = 2
 
         for key, vector in MOVEMENTS.iteritems():
-            x, y = vector
-            self.pos[0] += x * pixels
-            self.pos[1] += y * pixels
+            if keys_pressed[key]:
+                print "GOT KEY", key
+                x, y = vector
+                self.pos[0] += x * pixels
+                self.pos[1] += y * pixels
         self.rect.move(self.pos)
         self.update()
 
@@ -78,7 +80,7 @@ def main():
     player = MainCharacter()
     allsprites = pygame.sprite.RenderPlain((player))
 
-    keys_pressed = pygame.key.get_pressed()
+    pygame.key.set_repeat(250, 2)
 
     while True:
         for event in pygame.event.get():
@@ -86,11 +88,10 @@ def main():
                 pygame.quit()
                 sys.exit(0)
 
+            print event
             if event.type == KEYDOWN:
                 player.move_char(pygame.key.get_pressed(),
                                  background.get_rect())
-            else:
-                print event
 
             #if len(KEYSPRESSED):
             #    player.move_char(KEYSPRESSED, background.get_rect())
